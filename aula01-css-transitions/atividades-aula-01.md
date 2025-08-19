@@ -24,3 +24,5 @@ Use a seguinte estrutura HTML:
 ```
 
 2) Desenvolva quatro diferentes efeitos de transição utilizando as regras CSS em botões, campos de formulários e/ou outros elementos de interface do seu projeto ***frontend***, pode ser do próprio **TCC**, ou de **semestres anteriores**.
+
+* Prazo de entrega: 02/11
