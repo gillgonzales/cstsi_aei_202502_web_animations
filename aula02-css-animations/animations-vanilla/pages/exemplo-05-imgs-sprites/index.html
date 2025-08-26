@@ -32,14 +32,14 @@
             
             @keyframes div-sprite{
                  0%,100%{background-position: 0px 0px;transform: translateY(0px);}
-                 25%{background-position: -170px 0px;transform: translateY(2px);}
-                 50%{background-position: -330px 0px;transform: translateY(4px);}
-                 75%{background-position: -170px 0px;transform: translateY(8px);}
+                 25%{background-position: -170px 0px;transform: translateY(20px);}
+                 50%{background-position: -330px 0px;transform: translateY(40px);}
+                 75%{background-position: -170px 0px;transform: translateY(60px);}
             }
             
             img {
-                width: 16px;
-                height: 18px;
+                width: 160px;
+                height: 180px;
                 object-fit: none;
                 object-position: 40% 90%;
                 animation-name: img-sprite;
@@ -47,16 +47,21 @@
                 animation-iteration-count: infinite;
                 animation-timing-function: step-end;
               }
+
+              #reverse{
+                animation-direction: reverse;
+              }
               
               @keyframes img-sprite{
-                  0%,100%{object-position: 0% 67%;transform: translateX(0px);}
-                  25%{object-position: 50% 67%;transform: translateX(5px);}
-                  50%{object-position: 100% 67%;transform: translateX(10px);}
+                  0%,100%{object-position: 0% 67%; transform: translateX(0px);}
+                  25%{object-position: 50% 67%; transform: translateX(10px);}
+                  50%{object-position: 100% 67%; transform: translateX(20px);}
               }
         </style>
     </head>
     <body>
         <div></div>
-        <!--<img src="https://i.ibb.co/YWHGhYN/goblin.png" alt="Globin">-->
+        <img src="https://i.ibb.co/rdb23sk/goblin-big.png" alt="Globin">
+        <img id="reverse" src="/assets/img/goblin_big.png" alt="Globin">
     </body>
 </html>
