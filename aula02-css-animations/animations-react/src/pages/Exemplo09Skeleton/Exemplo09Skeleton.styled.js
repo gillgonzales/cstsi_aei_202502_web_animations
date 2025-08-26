@@ -46,7 +46,7 @@ export const Container = sty.div`
 `;
 
 export const Skeleton = sty.div`
-      background-image: linear-gradient(66deg, lightgrey, white, grey);
+      background-image: linear-gradient(66deg, grey, lightgrey, grey);
       background-size: 600%;
       background-repeat: no-repeat;
       background-position: 0px 0px;

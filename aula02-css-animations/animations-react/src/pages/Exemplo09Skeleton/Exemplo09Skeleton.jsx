@@ -10,7 +10,7 @@ const Exemplo09Skeleton = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      // setIsLoaded(true);
+      setIsLoaded(true);
       setLoadedData({ title: 'Exemplo Skeleton!', image: ImageBoat });
     }, 5000); 
     return () => clearTimeout(timer);
