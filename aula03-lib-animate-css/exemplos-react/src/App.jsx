@@ -18,7 +18,7 @@ function App() {
 
   return (
     <>
-      <div className="container">
+      <div className="container animate__animated animate__fadeInDown animate__delay-1s">
         <h1>CSTSI - AEI
           <a target="_blank" href="#">&nbsp;Aula 03</a>
         </h1>
