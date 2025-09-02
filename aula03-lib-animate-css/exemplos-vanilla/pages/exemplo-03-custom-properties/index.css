@@ -5,9 +5,9 @@
     --animate-delay: 4s;
   }
 
-/* .animate__animated.animate__fadeIn {
-    --animate-duration: 5s;
-} */
+.animate__animated.animate__fadeIn {
+    --animate-duration: 10s;
+}
 
 body {
     background-color: #333232;
@@ -38,7 +38,7 @@ body {
 
   .logoAnimatecss__fadeIn {
    /*---configurando opções de animação----*/
-    animation-duration: 2s;
+    /* animation-duration: 5s; */
     /*animation-iteration-count: infinite;*/ /*alterando repetições*/
     /* animation-delay: 1s; */
     animation-timing-function: ease-in-out;
