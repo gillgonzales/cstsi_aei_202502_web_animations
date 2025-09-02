@@ -9,7 +9,7 @@ export const Main = styled.main`
     
     /* Altera a duração apenas da animação fadeIn*/
     & .animate__animated.animate__fadeIn {
-        --animate-duration: 5s;
+        --animate-duration: 10s;
     }
 
     background-color: #333232;
@@ -54,7 +54,7 @@ export const LogoAnimateCssFadeIn = styled(LogoAnimateCss)`
     /*---configurando opções de animação----*/
 
     /*A propriedade tem prioridade em relação as outras variáveis*/
-    /* animation-duration: 2s; */
+    /*animation-duration: 2s;*/
     
     /*animation-iteration-count: infinite;*/ /*alterando repetições*/
     /* animation-delay: 1s; */
