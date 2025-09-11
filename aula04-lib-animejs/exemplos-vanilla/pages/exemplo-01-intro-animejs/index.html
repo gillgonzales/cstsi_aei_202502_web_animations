@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="/assets/img/favicon.png">
+	<!-- Google Font Press Start 2P -->
+	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+	<!-- latest -->
+	<link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/animejs@4.0.0/lib/anime.iife.min.js"></script>
+	<title>CSTSI-AEI Aula 04: Introdução a Biblioteca AnimeJS</title>
+	<style>
+		body {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.examples-containers {
+			margin-top: 5%;
+			width: 50%;
+		}
+
+		.btn {
+			margin: 15px;
+			width: 200px;
+		}
+
+		#circle {
+			width: 40px;
+			height: 40px;
+			background-color: blue;
+			border-radius: 50%;
+		}
+
+		.nes-btn {
+			border-image-repeat: stretch !important;
+		}
+	</style>
+</head>
+<body>
+	<h2 class="nes-text is-primary">
+		Exemplos de Introdução a Biblioteca
+		<a href="https://animejs.com/documentation/" target="_blank">AnimeJS</a>
+	</h2>
+
+	<div class="nes-container with-title examples-containers">
+		<span class="title">
+			Exemplo 1.1
+		</span>
+		<div id="circle"></div>
+	</div>
+	<div>
+		<a href="/">
+			<button type="button" title='Voltar ao início!' class="nes-btn is-error btn">Voltar</button>
+		</a>
+	</div>
+		<script>
+				//Animação 1.1
+				const { animate} = anime;	//disponível após a instalação via cdn ou npm
+				animate('#circle', { 		//alvo da animação, pode ser mais de um
+					translateX: 300,			//propriedade a ser modificada (camelCase)
+					backgroundColor: '#0f0',	//propriedade css em camelCase
+					borderRadius: '0%',			//propriedade css em camelCase
+					duration: 4000,				//duração em  milisegundos (ms) (animation-duration)
+					alternate: true,		//direção da animação (animation-direction) 
+					loop: true,					//numero de iterações (animation-iteration-count)
+					// ease: 'inBounce'		//função de tempo (animation-timing-function)
+					ease: 'outBounce'		//função de tempo (animation-timing-function)
+				});
+		</script>
+</body>
+
+</html>
