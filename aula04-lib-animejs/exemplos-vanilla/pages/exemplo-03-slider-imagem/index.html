@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="web icon" type="image/png" href="/assets/img/favicon.png" />
+  <!-- Google Font Press Start 2P -->
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet" />
+  <!-- latest -->
+  <link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+
+  <title>CSTSI-LPAW Aula 04: Biblioteca AnimeJS</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .btn {
+      margin: 15px;
+      width: 200px;
+    }
+
+    .examples-containers {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 5%;
+      width: 75%;
+    }
+
+    .slider-container {
+      margin-top: 5%;
+      width: 75%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .slider {
+      width: 90%;
+      min-height: 300px;
+    }
+
+    .slider-list {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+    }
+
+    .slider-element {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+    }
+
+    .slider-element img {
+      width: 100%;
+    }
+
+    .slider-item {
+      display: none;
+    }
+
+    .item-active {
+      display: block;
+    }
+
+    .nes-btn {
+      border-image-repeat: stretch !important;
+    }
+  </style>
+</head>
+
+<body>
+  <h2 class="nes-text is-primary">
+    Slider de Imagens com
+    <a href="https://animejs.com/documentation/" target="_blank">AnimeJS</a>
+  </h2>
+  <div class="nes-container with-title examples-containers">
+    <span class="title">Exemplo 3.1</span>
+    <div class="slider-container">
+      <div class="slider-prev">
+        <button type="button" class="nes-btn is-primary">&lArr;</button>
+      </div>
+      <div class="slider">
+        <ul class="slider-list">
+          <li class="slider-item">
+            <div class="slider-element">
+              <img alt='img01' src="/assets/img/wallpapers/wallpaper01.jpg" />
+            </div>
+          </li>
+          <li class="slider-item">
+            <div class="slider-element">
+              <img alt='img02' src="/assets/img/wallpapers/wallpaper02.jpg" />
+            </div>
+          </li>
+          <li class="slider-item">
+            <div class="slider-element">
+              <img alt='img03' src="/assets/img/wallpapers/wallpaper03.jpg" />
+            </div>
+          </li>
+          <li class="slider-item">
+            <div class="slider-element">
+              <img alt='img04' src="/assets/img/wallpapers/wallpaper04.jpg" />
+            </div>
+          </li>
+          <li class="slider-item">
+            <div class="slider-element">
+              <img alt='img05' src="/assets/img/wallpapers/wallpaper05.jpg" />
+            </div>
+          </li>
+          <li class="slider-item">
+            <div class="slider-element">
+              <img alt='img06' src="/assets/img/wallpapers/wallpaper06.jpg" />
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="slider-next">
+        <button type="button" class="nes-btn  is-primary">&rArr;</button>
+      </div>
+    </div>
+  </div>
+  <div>
+    <a href="/">
+      <button type="button" title="Voltar ao início!" class="nes-btn is-error btn">Voltar</button>
+    </a>
+  </div>
+  <script type="module">
+    import { animate, utils } from 'https://cdn.jsdelivr.net/npm/animejs@4.0.0/+esm';
+    const $ = utils.$;
+
+    const $sliderItens = $('.slider-item');
+    const $btnPrev = $('.slider-prev')[0];
+    const [$btnNext] = $('.slider-next');
+
+    console.log($sliderItens, $btnNext, $btnPrev)
+
+    const slideAnimationOptions = {
+      opacity: [0, 1],
+      display: ['none', 'block'],
+      filter: ['blur(100px)', 'blur(0px)'],
+      width: ['85%', '100%'],
+      delay: 100,
+      duration: 2000,
+      autoplay: true,
+      //ease: 'linear',
+      ease: "outElastic(1,.5)",
+    }
+    let activeItemIndex = 0
+
+    const showItem = (element) => {
+      console.log($sliderItens)
+      element.classList.add('item-active')
+      animate(
+        $(`li:nth-child(${activeItemIndex + 1}) img`),
+        slideAnimationOptions
+      )
+      deactivateItens()
+    }
+
+    const deactivateItens = () => {
+      $sliderItens.forEach((element, index) => {
+        if (index != activeItemIndex)
+          element.classList.remove('item-active')
+      })
+    }
+
+    const toggleBtnVisibility = () => {
+      $btnPrev.style.visibility = 'visible'
+      $btnNext.style.visibility = 'visible'
+      if (activeItemIndex == 0)
+        $btnPrev.style.visibility = 'hidden'
+      if (activeItemIndex == $sliderItens.length - 1)
+        $btnNext.style.visibility = 'hidden'
+    }
+
+    $btnPrev.onclick = () => {
+      if (activeItemIndex > 0)
+        showItem($sliderItens[--activeItemIndex])
+      toggleBtnVisibility()
+    }
+
+    $btnNext.onclick = () => {
+      if (activeItemIndex < $sliderItens.length - 1)
+        showItem($sliderItens[++activeItemIndex])
+      toggleBtnVisibility()
+    }
+
+    showItem($sliderItens[activeItemIndex]);
+
+    toggleBtnVisibility()
+  </script>
+  </div>
+  </div>
+</body>
+
+</html>
