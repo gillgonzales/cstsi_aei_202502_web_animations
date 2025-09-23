@@ -1,0 +1,129 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn {
+    margin: 15px;
+    width: 200px;
+}
+
+.examples-containers {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5%;
+    width: 75%;
+}
+
+.container {
+    margin-top: 1%;
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    column-gap: 2%;
+    align-items: center;
+    justify-content: center;
+}
+
+.circuit {
+    width: 500px;
+    height: 345px;
+    /* overflow: hidden; */
+    --posicao-x: 100px;
+    --posicao-y: 100px;
+
+}
+
+#luigiDiv, #marioDiv {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-repeat: no-repeat;
+}
+
+#luigiDiv {
+    background-image: url('/assets/img/mario-kart/luigi.png');
+    z-index: 11;
+}
+
+#marioDiv {
+    background-image: url('/assets/img/mario-kart/mario.png');
+    z-index: 12;
+}
+
+
+.nes-btn {
+    border-image-repeat: stretch !important;
+}
+
+svg #drone {
+    /* offset-path: path("M1 3C1 3 556.501 243 1014 1"); */
+    /* offset-path: path("M1 1L194.5 82.5L320.5 1L448 107.5L567 1L705.5 107.5L807 1L913.5 63"); */
+    offset-path: path("M1.008 5.054C41.9932 -15.4386 128.008 48.8634 205.508 25.9587C283.008 3.05401 370.508 21.5543 443.008 81.7774C515.508 142 623.508 25.9585 759.508 87.9184C895.508 149.878 927.464 48.8325 1014.01 3.054");
+    /* offset-path: path("M0.743199 257.48C0.743199 257.48 198.545 90.0487 368.243 319.98C537.941 549.911 801.743 -43.0205 755.743 3.47951"); */
+    animation: move-drone 5s linear infinite alternate paused;
+    /* transform-origin: center; */
+}
+
+#drone-container:hover svg #drone {
+    animation-play-state: running;
+}
+
+@keyframes move-drone {
+    100% {
+        offset-distance: 100%;
+        motion-offset: 10%;
+    }
+}
+
+@media screen and (max-width: 680px) {
+
+    .nes-container,.examples-containers {
+        padding: 5px;
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .circuit {
+        overflow: hidden;
+
+        #luigiDiv,#marioDiv  {
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+            /* background-color: red; */
+
+        }
+    }
+}
+
+@media screen and (max-width: 370px) {
+    .nes-container,.examples-containers {
+        width: max(75%,280px);
+        padding: 0px;
+        .container{
+            width: 256px;
+        }
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .circuit {
+        overflow: hidden;
+        #luigiDiv,#marioDiv  {
+            width: 15px;
+            height: 15px;
+            background-size: contain;
+            /* background-color: red; */
+
+        }
+    }
+}
