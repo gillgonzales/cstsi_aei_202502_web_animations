@@ -190,6 +190,7 @@ const Exemplo06ToMorph = () => {
                     <div className="menu_icons_container">
                         <Hamburger width={48} height={34} border={true} />
                         <Hamburger width={48} height={34} border={false} />
+                        <Hamburger width={64} height={57} border={true} /> 
                     </div>
                 </div>
                 <div>
