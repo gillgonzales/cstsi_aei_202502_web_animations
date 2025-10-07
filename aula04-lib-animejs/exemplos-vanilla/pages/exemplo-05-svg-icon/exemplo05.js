@@ -26,8 +26,11 @@ const anime2 = animate(
         onComplete: () => anime2.reset()
     });
 
-const $svgElement = $('#svg-container svg')[0]
-$svgElement.onmousemove = () => anime2.play();
+
+// const $svgElement = $('#svg-container svg')[0]
+const [$svgElement] = $('#svg-container svg')
+$svgElement.onmouseenter = () => anime2.play();
+$svgElement.onclick = () => anime2.play();
 
 
 //Animação 5.2
@@ -38,9 +41,9 @@ const [$squarePath, $jsPath, $ecmaPath, $sPath] = $('#svg_js_logo path');
 const anime3 = animate($squarePath,  //alvo da animação (elemento svg
     {
         // fill:[							//propriedade a ser modificada (fill)
-        // 	{value:'#ff0000', duration:1000},
-        // 	{value:'#00ff00', duration:2000},
-        // 	{value:'#0000ff', duration:2000}
+        // 	{to:'#ff0000', duration:333},
+        // 	{to:'#00ff00', duration:333},
+        // 	{to:'#0000ff', duration:333}
         // ],
         keyframes: [
             { fill: '#ff0000' },
@@ -49,32 +52,35 @@ const anime3 = animate($squarePath,  //alvo da animação (elemento svg
         ],
         duration: 1000, 			//duração em ms
         loop: true, 			//animação em loop (animation-count:infinite)
-        direction: 'alternate',
+        // direction: 'alternate', //v3
+        alternate:true,
         autoplay: false,
-        // easing: 'easeInOutExpo'	//função de tempo  (animation-timing-function)
-        // easing: 'linear'	//função de tempo  (animation-timing-function)
-        easing: 'easeInQuad'	//função de tempo  (animation-timing-function)
+        // ease: 'inOutExpo'	//função de tempo  (animation-timing-function)
+        // ease: 'linear'	//função de tempo  (animation-timing-function)
+        ease: 'inQuad'	//função de tempo  (animation-timing-function)
+        // ease: 'outElastic(1.79, 0.15)'	//função de tempo  (animation-timing-function)
     });
+
+
+const animeE =  animate($ecmaPath,  //alvo da animação (elemento svg
+                {
+                    opacity: 1,
+                    loop: false,
+                    autoplay: false,
+                    // ease: 'inOutExpo'	//função de tempo  (animation-timing-function)
+                    // ease: 'linear'	//função de tempo  (animation-timing-function)
+                    ease: 'inQuad'	//função de tempo  (animation-timing-function)
+                });
 
 const anime4 = animate($jsPath,  //alvo da animação (elemento svg
     {
         translateX: '100px',
         loop: false,
         autoplay: false,
-        // easing: 'easeInOutExpo'	//função de tempo  (animation-timing-function)
-        // easing: 'linear'	//função de tempo  (animation-timing-function)
-        easing: 'easeInQuad',	//função de tempo  (animation-timing-function)
-        onBegin: () => {
-            animate($ecmaPath,  //alvo da animação (elemento svg
-                {
-                    opacity: 1,
-                    loop: false,
-                    autoplay: true,
-                    // easing: 'easeInOutExpo'	//função de tempo  (animation-timing-function)
-                    // easing: 'linear'	//função de tempo  (animation-timing-function)
-                    easing: 'easeInQuad'	//função de tempo  (animation-timing-function)
-                })
-        }
+        // ease: 'easeInOutExpo'	//função de tempo  (animation-timing-function)
+        // ease: 'linear'	//função de tempo  (animation-timing-function)
+        ease: 'easeInQuad',	//função de tempo  (animation-timing-function)
+        onBegin: () => { animeE.play()}
     });
 
 
@@ -91,13 +97,15 @@ anime3.onPause = () => {
     path.setAttribute('fill', '#F7DF1E');
     animate($ecmaPath, {
         opacity: 0,
-        autoplay: true,
         onBegin: () => {
             animate($jsPath, {
                     translateX: ['-100px', '0px'],
                     loop: false,
                     autoplay: true,
-                    onComplete: () => anime4.reset(),
+                    onComplete: () => {
+                            anime4.reset()
+                            animeE.reset()
+                    }
                 })
             }
         })
@@ -109,7 +117,7 @@ const anime5 = animate($("#btnOpen"),
         opacity: 0,
         duration: 500,
         autoplay: false,
-        easing: 'linear'
+        ease: 'linear'
     });
 
 const anime6 = animate($("#btnClose"),
@@ -117,19 +125,17 @@ const anime6 = animate($("#btnClose"),
         opacity: .85,
         duration: 500,
         autoplay: false,
-        easing: 'linear'
+        ease: 'linear'
     });
 
 $("#container-svg-3 svg")[0].onclick = () => {
     if (anime5.targets[0].style.opacity == 1) {
         anime5.play();
         anime5.onBegin = () => anime6.play()
-        // anime6.progress = 0;
         anime6.reset();
     } else {
         anime6.reverse();
         anime6.onBegin = () => anime5.targets[0].style.opacity = 1
-        // anime5.progress = 0;
         anime5.reset();
     }
 }

@@ -29,7 +29,7 @@ const anime3 = animate($squarePath,  //alvo da animação (elemento svg
 const anime4 = animate($jsPath,  //alvo da animação (elemento svg
     {
         keyframes: [
-            { d: svg.morphTo($jsPath), duration: 500 },
+            { d: svg.morphTo($jsPath), duration: 200 },
             { d: svg.morphTo($ecmaPath), duration: 500 },
         ],
         loop: true, 			//animação em loop (animation-count:infinite)
