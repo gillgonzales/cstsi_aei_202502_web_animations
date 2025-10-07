@@ -1,8 +1,52 @@
-import React from 'react'
+import { animate, createScope, svg, utils } from 'animejs'
+import React, { useEffect, useRef } from 'react'
 
 const Drone = () => {
+
+    const rootScope = useRef(null)
+    const scope = useRef(null)
+
+    useEffect(() => {
+        scope.current = createScope({ root: rootScope }).add((self) => {
+
+            const $pathFigma = svg.createMotionPath("#figmaPath")
+            const $drone = utils.$("#drone")
+
+            console.log($drone)
+
+            const moveDrone = animate("#drone", {
+                    // rotate: '1turn',
+                    ...$pathFigma,
+                    ease: 'outQuad',
+                    duration: 1500,
+                    delay: 100,
+                    autoplay: false,
+                })
+
+            self.add('startDronePath', () => {
+                // alert("Move Drone")
+                moveDrone.play()
+                console.log("move", moveDrone)
+            })
+
+
+            
+        })
+
+        return () => {
+                scope.current.revert()
+        }
+    }, [])
+
+    const handleSVGMounseEnter = () => {
+        console.log(scope.current)
+        scope.current.methods.startDronePath()
+    }
+
     return (
-        <svg width="600" height="200" viewBox="0 0 1400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg ref={rootScope}
+            onMouseEnter={handleSVGMounseEnter}
+            width="600" height="200" viewBox="0 0 1400 200" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id='drone' clipPath="url(#clip0_2308_549)">
                 <path d="M188.5 93.8699H178.167V86.0351H188.5V93.8699Z" fill="#252545" />
                 <path d="M188.5 97.4382H178.167V93.8698H188.5V97.4382Z" fill="#54C5BB" />
@@ -110,6 +154,9 @@ const Drone = () => {
 
             <path id="motionPathRed" fill="none" stroke="#00f" strokeMiterlimit="10" strokeWidth="0"
                 d="M1.008 5.054C41.9932 -15.4386 128.008 48.8634 205.508 25.9587C283.008 3.05401 370.508 21.5543 443.008 81.7774C515.508 142 623.508 25.9585 759.508 87.9184C895.508 149.878 927.464 48.8325 1014.01 3.054" />
+
+            <path id="figmaPath" d="M1 18.5C142.5 82 644 -53.5 852 28.5" stroke="black" strokeWidth={5} />
+
         </svg>
     )
 }
