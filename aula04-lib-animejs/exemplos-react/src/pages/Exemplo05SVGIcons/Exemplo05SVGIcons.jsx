@@ -57,9 +57,9 @@ const Exemplo05SVGIcons = () => {
                     loop: true, 			//animação em loop (animation-count:infinite)
                     direction: 'alternate',
                     autoplay: false,
-                    // easing: 'easeInOutExpo'	//função de tempo  (animation-timing-function)
-                    // easing: 'linear'	//função de tempo  (animation-timing-function)
-                    easing: 'easeInQuad'	//função de tempo  (animation-timing-function)
+                    // ease: 'inOutExpo'	//função de tempo  (animation-timing-function)
+                    // ease: 'linear'	//função de tempo  (animation-timing-function)
+                    ease: 'inQuad'	//função de tempo  (animation-timing-function)
                 });
 
             const anime4 = animate($jsPath,  //alvo da animação (elemento svg
@@ -67,18 +67,18 @@ const Exemplo05SVGIcons = () => {
                     translateX: '100px',
                     loop: false,
                     autoplay: false,
-                    // easing: 'easeInOutExpo'	//função de tempo  (animation-timing-function)
-                    // easing: 'linear'	//função de tempo  (animation-timing-function)
-                    easing: 'easeInQuad',	//função de tempo  (animation-timing-function)
+                    // ease: 'easeInOutExpo'	//função de tempo  (animation-timing-function)
+                    // ease: 'linear'	//função de tempo  (animation-timing-function)
+                    ease: 'inQuad',	//função de tempo  (animation-timing-function)
                     onBegin: () => {
                         animate($ecmaPath,  //alvo da animação (elemento svg
                             {
                                 opacity: 1,
                                 loop: false,
                                 autoplay: true,
-                                // easing: 'easeInOutExpo'	//função de tempo  (animation-timing-function)
-                                // easing: 'linear'	//função de tempo  (animation-timing-function)
-                                easing: 'easeInQuad'	//função de tempo  (animation-timing-function)
+                                // ease: 'easeInOutExpo'	//função de tempo  (animation-timing-function)
+                                // ease: 'linear'	//função de tempo  (animation-timing-function)
+                                ease: 'inQuad'	//função de tempo  (animation-timing-function)
                             })
                     }
                 });
@@ -141,7 +141,7 @@ const Exemplo05SVGIcons = () => {
         })
 
 
-        return () => {
+        return () => { //componentWillUnmount - unmount
             scope.current.revert()
         }
     }, [])
@@ -170,7 +170,10 @@ const Exemplo05SVGIcons = () => {
             <ContainerExamples ref={rootScope}>
                 <div className="nes-container with-title ">
                     <span className="title">Exemplo 4.1</span>
-                    <div id="svg-container" onClick={handleAnimatePhone} className="nes-pointer">
+                    <div id="svg-container"  className="nes-pointer"
+                         onClick={handleAnimatePhone}
+                         onMouseEnter={handleAnimatePhone}
+                         >
                         {/* <?xml version="1.0" encoding="iso-8859-1"?> */}
                         {/* Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools */}
                         <svg height="100px" width="100px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
