@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="/assets/svgs/tailwind.svg">
+	<!-- Google Font Press Start 2P -->
+	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+	<!-- latest -->
+	<link href="https://unpkg.com/nes.css@latest/css/nes.min.css" rel="stylesheet" />
+
+	<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+	<title>CSTSI-AEI Aula 05: Introdução ao Framework TailwindCSS</title>
+	<style type="text/tailwindcss">
+
+		body {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.examples-containers {
+			margin-top: 5%;
+			min-width: 60%;
+		}
+
+		.btn {
+			margin: 15px;
+			width: 200px;
+		}
+
+		/*#circle {
+			width: 40px;
+			height: 40px;
+			background-color: blue;
+			border-radius: 50%;
+		}*/
+
+		.nes-btn {
+			border-image-repeat: stretch !important;
+		}
+
+		@theme {
+			/* --color-myblue-500: #0b61ee; */
+			--color-myblue: oklch(54.027% 0.22497 261.01);
+			--color-myblue-50: oklch(85.256% 0.06825 260.12);
+			--color-myblue-100: oklch(81.316% 0.08733 260.84);
+			--color-myblue-200: oklch(73.715% 0.12593 260.38);
+			--color-myblue-300: oklch(66.446% 0.16473 260.08);
+			--color-myblue-400: oklch(59.973% 0.20055 259.97);
+			--color-myblue-500: oklch(54.027% 0.22497 261.01);
+			--color-myblue-600: oklch(44.948% 0.183 260.88);
+			--color-myblue-700: oklch(35.47% 0.13993 260.64);
+			--color-myblue-800: oklch(25.248% 0.0914 260.07);
+			--color-myblue-900: oklch(14.256% 0.03626 251.14);
+			--color-myblue-950: oklch(0% 0 none);
+			
+			
+			--animate-pong: pong 1s ease-in infinite reverse;
+			@keyframes pong {
+			  0%,
+			  100% {
+				transform: translateX(0px);
+			  }
+			  50% {
+				transform: translateX(200px);
+			  }
+			}
+		  }
+
+	</style>
+</head>
+
+<body>
+	<h2 class="nes-text is-primary">
+		Exemplos de Introdução ao
+		<a href="https://tailwindcss.com/docs/installation/using-vite" target="_blank">Tailwind CSS</a>
+	</h2>
+
+	<div class="nes-container with-title examples-containers">
+		<span class="title">
+			Exemplo 1.1
+		</span>
+		<div class="bg-myblue-600 py-5 rounded-full w-[60px] h-[60px] text-white text-sm text-center">tail</div>
+	</div>
+
+	<div class="nes-container with-title examples-containers">
+		<span class="title">
+			Exemplo 1.2
+		</span>
+			<div class="bg-myblue-500 hover:bg-red-700 border-2 border-myblue-900 rounded-full w-[40px] h-[40px] hover:scale-x-350 translate-x-[100px] duration-3000 ease-[cubic-bezier(0,1.29,.47,.03)] delay-500 nes-pointer"></div>
+			<div class="bg-blue-500 hover:bg-red-500 rounded-full w-[40px] h-[40px] hover:scale-150 transition translate-x-[1px] animate-pong duration-2000 ease-[cubic-bezier(.71,1.27,.25,-0.53)] dealy-500 nes-pointer">
+		</div>
+	</div>
+
+	<div class="nes-container with-title examples-containers">
+		<span class="title">
+			Exemplo 1.3
+		</span>
+		<div class="flex sm:flex-row flex-col gap-4">
+			<div class="flex flex-col items-center">
+				<div>spin</div>
+				<div class="bg-blue-500 hover:bg-blue-900 rounded-sm w-[40px] h-[40px] transition-colors animate-spin duration-100 nes-pointer"></div>
+			</div>
+
+			<div class="flex flex-col items-center">
+				<div>ping</div>
+				<div class="bg-green-500 hover:bg-green-900 rounded-sm w-[40px] h-[40px] transition-colors animate-ping duration-100 nes-pointer"></div>
+			</div>
+			<div class="flex flex-col items-center">
+				<div>pulse</div>
+				<div class="bg-pink-500 hover:bg-pink-900 rounded-sm w-[40px] h-[40px] transition-colors animate-pulse duration-1000 nes-pointer"></div>
+			</div>
+
+
+			<div class="flex flex-col items-center">
+				<div> 4x</div>
+				<div class="bg-pink-900 hover:bg-purple-900 rounded-sm w-[40px] h-[40px] transition-colors animate-[pulse_1000ms_ease_4] nes-pointer"></div>
+			</div>
+
+			<div class="flex flex-col items-center">
+				<div>bounce</div>
+				<div class="bg-yellow-300 hover:bg-yellow-600 rounded-sm w-[40px] h-[40px] transition-colors animate-[bounce_500ms_linear_infinite] duration-100 nes-pointer"></div>
+			</div>
+
+			<div class="flex flex-col items-center">
+				<div> delay</div>
+				<div class="bg-orange-600 hover:bg-orange-900 rounded-sm w-[40px] h-[40px] transition-colors animate-[bounce_900ms_ease_1s_infinite] nes-pointer"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="nes-container with-title examples-containers">
+		<span class="title">
+			Exemplo 1.4
+		</span>
+		<div class="bg-myblue-500 rounded-full w-[40px] h-[40px] animate-pong nes-pointer"></div>
+	</div>
+	<div>
+		<a href="/">
+			<button type="button" title='Voltar ao início!' class="nes-btn is-error btn">Voltar</button>
+		</a>
+	</div>
+</body>
+
+</html>
