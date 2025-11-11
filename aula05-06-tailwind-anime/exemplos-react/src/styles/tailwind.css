@@ -1,6 +1,5 @@
 @import "tailwindcss";
-@tailwind theme;
-@tailwind utilities;
+
 
 @theme{
     --color-primary-500: #92cc41;
