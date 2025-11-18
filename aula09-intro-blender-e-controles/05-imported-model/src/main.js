@@ -47,7 +47,7 @@ var light = new THREE.AmbientLight(0xffffff, 10);
 scene.add(light);
 
 //Ponto de Luz
-var plight = new THREE.PointLight(0xffffff, 5);
+var plight = new THREE.PointLight(0xffffff, 50);
 plight.position.set(3,20,-15);
 scene.add(plight);
 
