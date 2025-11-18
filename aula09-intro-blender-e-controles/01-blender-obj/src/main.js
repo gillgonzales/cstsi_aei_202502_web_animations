@@ -17,7 +17,7 @@ const camera = new THREE.PerspectiveCamera(
   100//Plano distante
 );
 
-camera.position.z = 2
+camera.position.z = 6
 
 // //Luz
 var light = new THREE.AmbientLight(0x333333, 10);
@@ -25,7 +25,7 @@ scene.add(light);
 
 //Ponto de Luz
 const plight = new THREE.PointLight(0xffffff, 100);
-plight.position.set(5, 1, 0)
+plight.position.set(5, 2.5, 0)
 plight.distance = 10
 scene.add(plight);
 
@@ -33,8 +33,8 @@ const helper = new THREE.PointLightHelper(plight)
 scene.add(helper)
 
 
-const modelPath = 'models/monkey2/'
-const objFile = 'monkey_blender2.obj'
+const modelPath = 'models/'
+const objFile = 'suzanne202502.obj'
 
 const manager = new THREE.LoadingManager();
 manager.onProgress = function (item, loaded, total) {
@@ -68,7 +68,7 @@ objLoader.setPath(modelPath)
   })
 
 function animate() {
-  plight.position.x -= .01
+  plight.position.x -= .1
   monkey.model.rotation.y += .01
   renderer.render(scene, camera);
   requestAnimationFrame(animate);

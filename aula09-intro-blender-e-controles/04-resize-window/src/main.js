@@ -40,7 +40,7 @@ var light = new THREE.AmbientLight(0xffffff, 10);
 scene.add(light);
 
 //Ponto de Luz
-var plight = new THREE.PointLight(0xffffff, 5);
+var plight = new THREE.PointLight(0xffffff, 1);
 plight.position.set(3,20,-15);
 scene.add(plight);
 
@@ -59,7 +59,7 @@ let jet
 let anglo = 0
 
 function moveJet(){
-  let vel = 10
+  let vel = 1
   anglo = anglo > 360 ? 0 : anglo + vel
   jet.rotation.z = Math.sin((anglo * Math.PI/180))/2
 }

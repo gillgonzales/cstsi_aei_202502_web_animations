@@ -23,11 +23,11 @@ camera.position.z = 1.2
 const controls = new OrbitControls(camera, renderer.domElement);
 
 //Luz
-const light = new THREE.AmbientLight(0xffffff, 10);
+const light = new THREE.AmbientLight(0xffffff, 20);
 scene.add(light);
 
 //Ponto de Luz
-const plight = new THREE.PointLight(0xffffff, 10);
+const plight = new THREE.PointLight(0xff0000, .1);
 plight.position.set(10, 10, 0);
 scene.add(plight);
 
