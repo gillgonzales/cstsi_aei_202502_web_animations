@@ -119,7 +119,7 @@ function createEnemies(qtdEnemies) {
     enemy.position.x *= horizontalLimit
     
     let hitArea = hitSphere.clone()
-    hitArea.radius = hitArea.raditextureus * 4
+    hitArea.radius = hitArea.radius * 4
 
     let enemyClone = {
       model: enemy.clone(),
@@ -215,7 +215,7 @@ function showEnemyHit(enemy) {
 
 function shooting() {
   if (TOTAL_SHOTS > 0) {
-    if (jet.shots.length > 10)
+    if (jet.shots.length > 100)
       return 0
     TOTAL_SHOTS--
     const shot = {
