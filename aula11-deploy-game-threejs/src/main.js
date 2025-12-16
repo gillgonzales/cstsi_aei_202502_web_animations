@@ -1,13 +1,16 @@
 
-import {AmbientLight, Color, LoadingManager, Mesh, MeshStandardMaterial, PerspectiveCamera, PointLight, Scene, Sphere, SphereGeometry, Vector3, WebGLRenderer} from 'three'
+import { AmbientLight, Color, LoadingManager, Mesh, MeshBasicMaterial, MeshStandardMaterial, PerspectiveCamera, PlaneGeometry, PointLight, Scene, Sphere, SphereGeometry, TextureLoader, Vector3, WebGLRenderer } from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
 import { createSkyBox } from './skybox'
+import TextureAnimator from './textureAnimation'
 
 
-const  QTD_ENEMIES  = 10;
-const HIT_RADIUS = .125
+const QTD_ENEMIES = 10;
+// const HIT_RADIUS = .125
+const HIT_RADIUS = .5
 let TOTAL_SHOTS = 1000
+let GAME_PAUSED = false
 
 const renderer = new WebGLRenderer({ antialias: true })
 renderer.setSize(window.innerWidth, window.innerHeight)
@@ -32,7 +35,7 @@ scene.add(skyBox)
 const light = new AmbientLight(0xffffff, 20);
 scene.add(light);
 
-const plight = new PointLight(0xffffff, 250, 50,.5);
+const plight = new PointLight(0xffffff, 250, 50, .5);
 plight.position.set(0, 25, 10);
 scene.add(plight);
 
@@ -64,6 +67,15 @@ enemyMtlLoader.setPath(jetPath)
 enemyObjLoader.setPath(jetPath)
 enemyObjLoader.setMaterials(await enemyMtlLoader.loadAsync(enemyMtlFile))
 
+const sphere_geometry = new SphereGeometry(HIT_RADIUS / 2, 64, 32);
+const sphereColor = new MeshStandardMaterial({ color: 0xffff00 });
+const sphere = new Mesh(sphere_geometry, sphereColor);
+const hitSphere = new Sphere(new Vector3(0, 0, 0), HIT_RADIUS)
+
+const explosionTexture = new TextureLoader().load('img/textures/explosion.png');
+const explosionlight = new PointLight(0xff3300, 1, 5);
+
+
 const enemy = await enemyObjLoader.loadAsync(objFile)
 enemy.scale.setScalar(.5)
 enemy.position.y = .4
@@ -75,33 +87,48 @@ const enemies = createEnemies(QTD_ENEMIES)
 
 enemy.position.z = -1000;
 
-const sphere_geometry = new SphereGeometry(HIT_RADIUS / 2, 64, 32);
-const sphereColor = new MeshStandardMaterial({ color: 0xffff00 });
-const sphere = new Mesh(sphere_geometry, sphereColor);
-
-const hitSphere = new Sphere(new Vector3(0, 0, 0), HIT_RADIUS)
-
-
-const gameLoop=()=>{
+const gameLoop = () => {
   skyBox.rotation.y += .001
   skyBox.position.z += .001
-  enemies.forEach((e)=>moveEnemy(e))
+  enemies.forEach((e) => {
+    moveEnemy(e)
+    if (!e.dead && shootDown(e)) {
+      console.error("COLIDIU!!!")
+      showEnemyHit(e)
+      // GAME_PAUSED = true;
+    }
+  })
   moveJet()
   updateShots()
   renderer.render(scene, camera)
-	requestAnimationFrame(gameLoop)
+  !GAME_PAUSED && requestAnimationFrame(gameLoop)
 }
 
 function createEnemies(qtdEnemies) {
-  let distance = 5
+  let distance = 10
   let horizontalLimit = 5
-  return Array.from({ length: qtdEnemies }).map(() => {
+  return Array.from({ length: QTD_ENEMIES }).map(() => {
+    let texture = explosionTexture.clone();
+    texture.needsUpdate = true;
+    let explodeMaterial = new MeshBasicMaterial({ map: texture, transparent: true });
+    let exploGeo = new PlaneGeometry(4, 4, 1, 1);
+    
+
     enemy.position.z = -(Math.random() * distance + distance)
     enemy.position.x = (Math.random() * (Math.random() > .5 ? 1 : -1));
     enemy.position.x *= horizontalLimit
+    
+    let hitArea = hitSphere.clone()
+    hitArea.radius = hitArea.raditextureus * 4
+
     let enemyClone = {
       model: enemy.clone(),
-      dead: false
+      hit: hitArea,
+      dead: false,
+      explosion:{
+        sprite: new TextureAnimator(texture, 8, 6, 48, 50),
+        model: new Mesh(exploGeo, explodeMaterial),
+      }
     }
     scene.add(enemyClone.model)
     return enemyClone
@@ -116,8 +143,8 @@ function updateJoystick(event) {
     jetJoystick.x = null
     jetJoystick.y = null
   }
-  const {x,y} = jetJoystick
-  console.log(x,y)  
+  const { x, y } = jetJoystick
+  // console.log(x, y)
 }
 
 function moveJet() {
@@ -129,7 +156,7 @@ function moveJet() {
     let ww = window.innerWidth
 
     jet.rotation.x += (jetJoystick.y - wh / 2) / wh / 100
-    
+
     if (Math.abs(jet.position.x) > 1) {
       jet.position.x = jet.position.x / Math.abs(jet.position.x)
     } else {
@@ -154,19 +181,41 @@ function moveEnemy(enemy) {
       enemy.model.position.z = -(Math.random() * 100 + 100)
       enemy.model.position.x = Math.random() * (Math.random() > .5 ? 5 : -5);
     } else if (distance > -40) {
-      velocity += .48
+      velocity += .48/4
     } else if (distance > -30) {
-      velocity += .32
+      velocity += .32/2
     } else if (distance > -10) {
-      velocity += .24
+      velocity += .24/2
     }
     enemy.model.position.z += velocity
+    enemy.hit.center.copy(enemy.model.position)
+  }else {
+    enemy.model.position.z = 1000
+    enemy.explosion.model.position.z += .05
+    enemy.explosion.model.position.y -= .005
+    if (enemy.explosion.sprite.currentTile < enemy.explosion.sprite.numberOfTiles - 1) {
+      enemy.explosion.sprite.update(20)
+    } else {
+      scene.remove(enemy.explosion.model);
+      enemy.dead = false
+      enemy.model.position.z = -(Math.random() * 100 + 100)
+      enemy.explosion.sprite.reset()
+    }
   }
+}
+
+function showEnemyHit(enemy) {
+  enemy.explosion.model.position.copy(enemy.model.position.clone())
+  explosionlight.position.copy(enemy.model.position.clone())
+  enemy.explosion.model.scale.setScalar(1.5)
+  scene.add(explosionlight);
+  scene.add(enemy.explosion.model);
+  enemy.dead = true
 }
 
 function shooting() {
   if (TOTAL_SHOTS > 0) {
-    if (jet.shots.length > 50)
+    if (jet.shots.length > 10)
       return 0
     TOTAL_SHOTS--
     const shot = {
@@ -175,7 +224,7 @@ function shooting() {
       model: sphere.clone(),
       hit: hitSphere.clone(),
     }
-    shot.hit.radius = HIT_RADIUS / 2
+    shot.hit.radius = HIT_RADIUS
     shot.model.material.transparent = true
     shot.model.material.opacity = .5
     shot.model.material.emissive = new Color(0xffff00)
@@ -209,10 +258,15 @@ function updateShots() {
 }
 
 
+function shootDown(enemy) {
+  if (jet.shots.length == 0) return false;
+  return jet.shots.find(shot => shot.hit.intersectsSphere(enemy.hit))
+}
+
 
 window.addEventListener('mousemove', updateJoystick);
 window.addEventListener('click', shooting);
-window.addEventListener('keydown', e =>{
+window.addEventListener('keydown', e => {
   return ((e.key == ' ' || e.key == 'Enter') && shooting())
 });
 
