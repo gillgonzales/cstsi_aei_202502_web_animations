@@ -267,7 +267,16 @@ function shootDown(enemy) {
 window.addEventListener('mousemove', updateJoystick);
 window.addEventListener('click', shooting);
 window.addEventListener('keydown', e => {
-  return ((e.key == ' ' || e.key == 'Enter') && shooting())
+  switch(e.key){
+    case ' ':
+    case'Enter': shooting()
+    break;
+    case 'p':
+    case 'P':
+      GAME_PAUSED = !GAME_PAUSED;
+      gameLoop()
+    break;
+  }
 });
 
 gameLoop()
